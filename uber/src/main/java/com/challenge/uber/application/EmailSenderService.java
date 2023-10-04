@@ -2,11 +2,15 @@ package com.challenge.uber.application;
 
 import com.challenge.uber.adapters.EmailSenderGateway;
 import com.challenge.uber.core.EmailSenderUserCase;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class EmailSenderService implements EmailSenderUserCase {
 
     private final EmailSenderGateway emailSenderGateway;
 
+    @Autowired
     public EmailSenderService(EmailSenderGateway emailSenderGateway) {
         this.emailSenderGateway = emailSenderGateway;
     }

@@ -3,6 +3,8 @@ package com.challenge.uber.infra.ses;
 import com.amazonaws.services.simpleemail.AmazonSimpleEmailService;
 import com.amazonaws.services.simpleemail.model.*;
 import com.challenge.uber.adapters.EmailSenderGateway;
+import com.challenge.uber.core.exceptions.EmailServiceException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -10,6 +12,7 @@ public class SesEmailSender implements EmailSenderGateway {
 
     private final AmazonSimpleEmailService amazonSimpleEmailService;
 
+    @Autowired
     public SesEmailSender(AmazonSimpleEmailService amazonSimpleEmailService) {
         this.amazonSimpleEmailService = amazonSimpleEmailService;
     }
@@ -27,7 +30,7 @@ public class SesEmailSender implements EmailSenderGateway {
         try {
             this.amazonSimpleEmailService.sendEmail(request);
         }catch (AmazonSimpleEmailServiceException exception){
-            throw new EmailServiceException("Failure while sending email!");
+            throw new EmailServiceException("Failure while sending email!", exception);
         }
     }
 }
